@@ -1,9 +1,6 @@
 import org.apache.commons.codec.digest.DigestUtils;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
@@ -45,12 +42,8 @@ public class HASHSumChecker {
             String hashSumType = subString[1];
             String hashSum = subString[2];
 
-            if (filesToCheckBuilder.charAt(filesToCheckBuilder.length() - 1) != '/' || filesToCheckBuilder.charAt(filesToCheckBuilder.length() - 1) != '\\') {
-                if (System.getProperty("os.name").contains("Windows")) {
-                    filesToCheckBuilder.append("\\");
-                } else {
-                    filesToCheckBuilder.append("/");
-                }
+            if ((filesToCheckBuilder.charAt(filesToCheckBuilder.length() - 1) != '/') && (filesToCheckBuilder.charAt(filesToCheckBuilder.length() - 1) != '\\')) {
+                filesToCheckBuilder.append(File.separator);
             }
 
             switch (checkHashSum(filesToCheckBuilder + fileName, hashSumType, hashSum)) {
